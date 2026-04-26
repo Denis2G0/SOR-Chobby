@@ -388,7 +388,7 @@ local headingFormats = {
 		inButton = 4,
 		paragraphSpacing = 20,
 		topHeadingOffset = 60,
-		imageSize = 120,
+		imageSize = 400, -- SOR: Increased from 120 for larger faction hero images
 		buttonBot = 6,
 		vSpacing = 6,
 	},
@@ -524,15 +524,18 @@ local function GetNewsEntry(parentHolder, index, headingSize, timeAsTooltip, top
 		offset = offset + controls.heading.height
 
 		if entryData.imageFile then
-			textPos = headFormat.imageSize + 12
+			-- SOR: Center image above text, use fixed height for faction heroes
+			local imageWidth = headFormat.imageSize
+			local imageHeight = 300 -- Fixed height for faction hero images
+			local centerX = math.max(4, (holder.width - imageWidth) / 2)
 			local imagePath = entryData.imageFile
 			if not controls.image then
 				controls.image = Image:New{
 					name = "news" .. index,
-					x = 4, -- Fireball: Why not textpos(=6) ?
+					x = centerX, -- Centered instead of left-aligned
 					y = offset + headFormat.vSpacing,
-					width = headFormat.imageSize,
-					height = headFormat.imageSize,
+					width = imageWidth,
+					height = imageHeight,
 					keepAspect = true,
 					checkFileExists = true,
 					fallbackFile = IMG_MISSING,
@@ -543,8 +546,10 @@ local function GetNewsEntry(parentHolder, index, headingSize, timeAsTooltip, top
 				controls.image.file = imagePath
 				controls.image:Invalidate()
 				controls.image:SetVisibility(true)
+				controls.image:SetPos(centerX, nil, imageWidth, imageHeight)
 			end
-			offset = offset + headFormat.vSpacing + headFormat.imageSize
+			textPos = 6 -- Reset text position to left margin (image is now centered above)
+			offset = offset + headFormat.vSpacing + imageHeight
 		elseif controls.image then
 			controls.image:SetVisibility(false)
 		end
@@ -611,7 +616,7 @@ local function GetNewsEntry(parentHolder, index, headingSize, timeAsTooltip, top
 		local offsetImage = 0
 		if controls.image and controls.image.visible then
 			controls.image:SetPos(nil, offset + headFormat.vSpacing)
-			offsetImage = offset + headFormat.vSpacing + headFormat.imageSize
+			offsetImage = offset + headFormat.vSpacing + 300 -- SOR: Use fixed 300px height
 		end
 
 		if controls.dateTime and controls.dateTime.visible then
@@ -974,11 +979,13 @@ local function InitializeControls(window)
 
 	LeaveIntentionallyBlank(rightLower, "(reserved)")
 
-	-- Populate link panel
-	AddLinkButton(leftCenter, "\255\255\225\20" .. "Donate",   "We are once again accepting donations! Support the project now!", "https://www.beyondallreason.info/donate-for-bar",0, 0, "75.5%", 0) --last
-	AddLinkButton(leftCenter, "Code of Conduct",  "Code of conduct and terms of use", "https://www.beyondallreason.info/code-of-conduct", 0, 0, "50.5%", "25.5%") --third
-	AddLinkButton(leftCenter, "Website", "Visit our website for more, opens https://www.beyondallreason.info/", "https://www.beyondallreason.info/",   0, 0, "25.5%", "50.5%") --second
-	AddLinkButton(leftCenter, "Join our Discord", "Opens a link to https://discord.gg/beyond-all-reason in your browser.", "https://discord.gg/beyond-all-reason", 0, 0, 0, "75.5%") --first
+	-- Populate link panel - REMOVED for SOR (no Discord/Website/Code/D buttons)
+	--[[
+	AddLinkButton(leftCenter, "\255\255\225\20" .. "Donate",   "We are once again accepting donations! Support the project now!", "https://www.beyondallreason.info/donate-for-bar",0, 0, "75.5%", 0)
+	AddLinkButton(leftCenter, "Code of Conduct",  "Code of conduct and terms of use", "https://www.beyondallreason.info/code-of-conduct", 0, 0, "50.5%", "25.5%")
+	AddLinkButton(leftCenter, "Website", "Visit our website for more, opens https://www.beyondallreason.info/", "https://www.beyondallreason.info/",   0, 0, "25.5%", "50.5%")
+	AddLinkButton(leftCenter, "Join our Discord", "Opens a link to https://discord.gg/beyond-all-reason in your browser.", "https://discord.gg/beyond-all-reason", 0, 0, 0, "75.5%")
+	--]]
 
 	-- News Handler
 	--[[
