@@ -1815,11 +1815,11 @@ local function AddTeamButtons(parent, offX, joinFunc, aiFunc, unjoinable, disall
 		local currentBitmask, currentOurBitmask = 0, 0
 
 		local teamFactionsSigns = {"ALL","✔  ","✔  ","✔  ","RESET"}
-		local teamFactionsNames = {"ALL", "Resistance", "Synth", "Legion", "RESET"}
+		local teamFactionsNames = {"ALL", "Synth", "Resistance", "Legion", "RESET"}
 		local teamFactionsTooltips = {
 			nil,
-			"Toggle Resistance Playability for this team",
 			"Toggle Synth Playability for this team",
+			"Toggle Resistance Playability for this team",
 			"Toggle Legion Playability for this team",
 			"Re-Enable All Factions for All Teams",
 		}

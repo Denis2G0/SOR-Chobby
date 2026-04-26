@@ -2,12 +2,12 @@ local SIDEPICS_DIR = LUA_DIRNAME .. "configs/gameConfig/byar/sidepics/"
 
 return {
 	{	--	0
-		name = "Resistance",
+		name = "Synth",
 		logo = SIDEPICS_DIR .. "armada.png",
 		logoScale = 0.90,
 	},
 	{	--	1
-		name = "Synth",
+		name = "Resistance",
 		logo = SIDEPICS_DIR .. "cortex.png",
 		logoScale = 0.85,
 	},
